@@ -169,7 +169,7 @@
                     <div class="row d-flex justify-content-center">
                         <div class="col-lg-3 mt-5">
                             <h5 class="fname">
-                              Adams S.
+                              Adam S.
                             </h5>
                             <span class="test-card-stars">
                                 <i class="fa-solid fa-star"></i>
@@ -193,7 +193,7 @@
                                 <i class="fa-solid fa-star fa-star-grey"></i>
                               </span>
                             <p class="name-text mt-2">A great place to invest your money with minimum 
-                              risk. Exemplary return. recommended 👌</p>
+                              risk. Exemplary return. recommended ðŸ‘Œ</p>
                         </div>
                     </div>
                 </div>
@@ -367,4 +367,17 @@
 @endsection
 @section('scripts')
   <script src="{{asset('js/intl-tel-input.js')}}"></script>
+  <script src="https://www.google.com/recaptcha/api.js?render={{env('GOOGLE_CAPTCHA_SITE_KEY')}}"></script>
+  <script>
+    $('#buyer-form').submit(function(event) {
+        event.preventDefault();
+        grecaptcha.ready(function() {
+            grecaptcha.execute('{{env('GOOGLE_CAPTCHA_SITE_KEY')}}', {action: 'buyer_form_submit'}).then(function(token) {
+                $('#buyer-form').prepend('<input type="hidden" name="token" value="' + token + '">');
+                $('#buyer-form').prepend('<input type="hidden" name="action" value="download_project">');
+                $('#buyer-form').unbind('submit').submit();
+            });;
+        });
+  });
+  </script>
 @endsection

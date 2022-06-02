@@ -6,6 +6,7 @@ use App\Exports\ContractBuyersExport;
 use App\Models\Buyer;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 
 class BuyerController extends Controller
 {
@@ -39,24 +40,41 @@ class BuyerController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'first_name' =>'required|string',
-            'last_name' => 'required|string',
-            'email' => 'required|email:rfc,dns',
-            'full_phone' => 'required|string',
-            'country' => 'required'
-        ]);
-
-        $contractBuyer = new Buyer();
-        $contractBuyer->firstname = $request->first_name;
-        $contractBuyer->lastname = $request->last_name;
-        $contractBuyer->email = $request->email;
-        $contractBuyer->contact_number = $request->full_phone;
-        $contractBuyer->country = $request->country;
+        $token = $request->token;
+        $action = $request->action;
         
-        if($contractBuyer->save())
+        //calling guzzleHttp
+        $response =  Http::get('https://www.google.com/recaptcha/api/siteverify',[
+            'response'=>$token,
+            'secret' => env('GOOGLE_CAPTCHA_SECRET_KEY')
+        ]);
+        $responseFromGoogleRecaptcha = json_decode($response,true);
+
+        if($responseFromGoogleRecaptcha['success'] ==true && $responseFromGoogleRecaptcha['action'] == $action && $responseFromGoogleRecaptcha['score']> 0.5){
+            
+            $request->validate([
+                'first_name' =>'required|string',
+                'last_name' => 'required|string',
+                'email' => 'required|email:rfc,dns',
+                'full_phone' => 'required|string',
+                'country' => 'required'
+            ]);
+    
+            $contractBuyer = new Buyer();
+            $contractBuyer->firstname = $request->first_name;
+            $contractBuyer->lastname = $request->last_name;
+            $contractBuyer->email = $request->email;
+            $contractBuyer->contact_number = $request->full_phone;
+            $contractBuyer->country = $request->country;
+            
+            if($contractBuyer->save())
+            {
+                return back()->with('success','Thank you for taking the time to fill out the form. Our E-mail team will be in contact with you shortly.');
+            }
+        }
+        else
         {
-            return back()->with('success','Thank you for taking the time to fill out the form. Our E-mail team will be in contact with you shortly.');
+             return back()->with('errors',"Spam or Bot Activity Detected!");
         }
 
     }
