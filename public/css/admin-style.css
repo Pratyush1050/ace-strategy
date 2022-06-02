@@ -1,0 +1,86 @@
+/* Side navbar */
+/* Page Content Part */
+/* dashboard home */
+/* add edit buttons */
+/*  forms */
+a {
+    text-decoration: none;
+    color: inherit;
+  }
+  
+  ul {
+    list-style: none;
+  }
+  
+  li {
+    list-style: none;
+  }
+  
+  #side-nav .navbar-brand {
+    font-size: 1.5rem;
+  }
+  
+  #side-nav .navbar {
+    -webkit-box-align: start;
+        -ms-flex-align: start;
+            align-items: flex-start;
+  }
+  
+  #side-nav .navbar-text {
+    padding-left: 1rem;
+  }
+  
+  #side-nav .plain-text-navbar {
+    padding-left: 0.5rem;
+    font-weight: 600;
+    color: grey;
+  }
+  
+  #page-content {
+    color: black;
+    padding-left: 2rem;
+  }
+  
+  #page-content .page-title {
+    font-weight: 600;
+  }
+  
+  #page-content .dashboard-page-title {
+    margin-top: 1rem;
+    font-weight: 600;
+    margin-bottom: 2rem;
+  }
+  
+  #dash-home .card {
+    height: 8rem;
+    width: 15rem;
+    padding: 1rem 3rem 1rem 3rem;
+    -webkit-box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+            box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+  }
+  
+  .js-example-basic-single {
+    width: 100%;
+  }
+  
+  /*  forms */
+  
+  #admin-form label {
+    margin-top: 1.5rem;
+  
+    color: #01261c;
+  }
+  #admin-form button {
+    margin-top: 1.5rem;
+  }
+  #admin-form input {
+    border: 1px solid grey;
+    border-radius: 0.4rem;
+  }
+  #admin-form textarea {
+    height: 12rem;
+    border: 1px solid grey;
+    color: grey;
+    border-radius: 0.5rem;
+  }
+  /*# sourceMappingURL=style.css.map */
